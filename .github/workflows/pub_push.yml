@@ -33,6 +33,7 @@ jobs:
       
       - name: Git push
         run: |
+          echo ${{ secrets.PUBLIC_REMOTE_REPOSITORY }}
           git push ${{ secrets.PUBLIC_REMOTE_REPOSITORY }} main
         env:
-          GIT_SSH_COMMAND: ${{ secrets.DEPLOY_KEY }} 
+          GIT_SSH_COMMAND: ssh -i <(echo "${{ secrets.DEPLOY_KEY }}") -o StrictHostKeyChecking=no
