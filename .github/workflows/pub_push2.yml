@@ -24,6 +24,12 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
+      - name: Debug permissions
+        run: |
+          gh api "/repos/takkaO/pub_test2" --jq '{name, permissions}'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
