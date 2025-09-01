@@ -38,5 +38,5 @@ jobs:
           eval "$(ssh-agent -s)"
           echo "${{ secrets.DEPLOY_KEY }}" | ssh-add -
           ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>/dev/null
-          git push ${{ secrets.PUBLIC_REMOTE_REPOSITORY }} main
+          git push ${{ secrets.PUBLIC_REMOTE_REPOSITORY }} main --tags
           ssh-agent -k
