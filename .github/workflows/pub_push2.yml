@@ -45,4 +45,4 @@ jobs:
       
       - name: Git push
         run: |
-          git push https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/takkaO/pub_test2.git main --tags
+          git push ${{ secrets.PUBLIC_REMOTE_REPOSITORY2 }} main --tags
