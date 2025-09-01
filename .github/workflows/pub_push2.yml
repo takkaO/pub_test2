@@ -17,6 +17,7 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: takkaO  # 必須
 
       - name: Get GitHub App User ID
         id: get-user-id
