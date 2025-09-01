@@ -1,0 +1,38 @@
+name: Deploy public repository
+on:
+  # push: 
+  #   branches:
+  #     - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Setup
+    runs-on: ubuntu-24.04
+    environment: FOR_PROGRESS_BAR
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+    steps:
+      - name: Set current datetime as env variable
+        env:
+          TZ: 'Asia/Tokyo' # Set timezone
+        run: echo "CURRENT_DATETIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Set git-configs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config push.default current
+      
+      - name: Git push
+        run: |
+          git push ${{ secrets.PUBLIC_REMOTE_REPOSITORY }} main
