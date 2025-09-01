@@ -33,6 +33,8 @@ jobs:
       
       - name: Git push
         run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           eval "$(ssh-agent -s)"
           echo "${{ secrets.DEPLOY_KEY }}" | ssh-add -
           ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>/dev/null
