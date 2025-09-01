@@ -33,7 +33,8 @@ jobs:
       
       - name: Git push
         run: |
-          echo ${{ secrets.PUBLIC_REMOTE_REPOSITORY }}
+          eval "$(ssh-agent -s)"
+          echo "${{ secrets.DEPLOY_KEY }}" | ssh-add -
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>/dev/null
           git push ${{ secrets.PUBLIC_REMOTE_REPOSITORY }} main
-        env:
-          GIT_SSH_COMMAND: ssh -i <(echo "${{ secrets.DEPLOY_KEY }}") -o StrictHostKeyChecking=no
+          ssh-agent -k
