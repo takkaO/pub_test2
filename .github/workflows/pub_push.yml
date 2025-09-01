@@ -24,8 +24,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref }}
-          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Set git-configs
         run: |
@@ -36,3 +34,5 @@ jobs:
       - name: Git push
         run: |
           git push ${{ secrets.PUBLIC_REMOTE_REPOSITORY }} main
+        env:
+          GIT_SSH_COMMAND: ${{ secrets.DEPLOY_KEY }} 
